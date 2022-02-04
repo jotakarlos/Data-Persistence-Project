@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class Brick : MonoBehaviour
 {
     public UnityEvent<int> onDestroyed;
     
     public int PointValue;
-
+  
     void Start()
     {
         var renderer = GetComponentInChildren<Renderer>();

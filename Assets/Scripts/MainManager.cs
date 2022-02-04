@@ -99,20 +99,29 @@ public class MainManager : MonoBehaviour
 
         var jugadores = MenuManager.Instance.LoadJugadores();
 
-        for (int i = 0; i < jugadores.Count; i++)
+        if (jugadores.Count > 0)
         {
-            mayor = MenuManager.Instance.compararScore(m_Points,jugadores[i].puntuacionJugador );
-            if (mayor)
-            {
-                break;
-            }
+             for (int i = 0; i < jugadores.Count; i++)
+                    {
+                        mayor = MenuManager.Instance.compararScore(m_Points,jugadores[i].puntuacionJugador );
+                        if (mayor)
+                        {
+                            break;
+                        }
+                    }
+            
+                    if (mayor)
+                    {
+                        MenuManager.Instance.SaveJugador();
+                         //BestScoreText.text = "Best Score : "+ MenuManager.Instance.nombreJugadorActual + " : " + MenuManager.Instance.puntuacionJugadorActual ;
+                    }
         }
-
-        if (mayor)
+        else
         {
             MenuManager.Instance.SaveJugador();
-             //BestScoreText.text = "Best Score : "+ MenuManager.Instance.nombreJugadorActual + " : " + MenuManager.Instance.puntuacionJugadorActual ;
         }
+        
+       
 
         MenuManager.Instance.BestScore();
 
