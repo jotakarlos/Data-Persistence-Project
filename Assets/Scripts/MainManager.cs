@@ -14,28 +14,27 @@ public class MainManager : MonoBehaviour
     public Text BestScoreText;
     public GameObject GameOverText;
     public Button btnVolver;
-    
+
     private bool m_Started = false;
     private int m_Points;
-    
-    private bool m_GameOver = false;
-   
 
-    
+    private bool m_GameOver = false;
+
+
     // Start is called before the first frame update
     void Start()
     {
         //MenuManager.Instance.LoadJugador();
         if (MenuManager.Instance.puntuacionJugadorActual > 0)
-        { 
+        {
             //BestScoreText.text = "Best Score : "+ MenuManager.Instance.nombreMejorJugador + " : " + MenuManager.Instance.mejorPuntuacion ;
         }
 
         BestScoreText.text = MenuManager.Instance.BestScore();
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
-        
-        int[] pointCountArray = new [] {1,1,2,2,5,5};
+
+        int[] pointCountArray = new[] {1, 1, 2, 2, 5, 5};
         for (int i = 0; i < LineCount; ++i)
         {
             for (int x = 0; x < perLine; ++x)
@@ -83,17 +82,16 @@ public class MainManager : MonoBehaviour
         m_GameOver = true;
         GameOverText.SetActive(true);
         btnVolver.gameObject.SetActive(true);
-       // if (m_Points > MenuManager.Instance.mejorPuntuacion)
-       // {
-            UpdateScore();
-            MenuManager.Instance.BestScore();
-       // }
-       
+        // if (m_Points > MenuManager.Instance.mejorPuntuacion)
+        // {
+        UpdateScore();
+        MenuManager.Instance.BestScore();
+        // }
     }
 
     private void UpdateScore()
     {
-        bool mayor=false;
+        bool mayor = false;
         MenuManager.Instance.nombreJugadorActual = MenuManager.Instance.jugadorPlay;
         MenuManager.Instance.puntuacionJugadorActual = m_Points;
 
@@ -101,31 +99,28 @@ public class MainManager : MonoBehaviour
 
         if (jugadores.Count > 0)
         {
-             for (int i = 0; i < jugadores.Count; i++)
-                    {
-                        mayor = MenuManager.Instance.compararScore(m_Points,jugadores[i].puntuacionJugador );
-                        if (mayor)
-                        {
-                            break;
-                        }
-                    }
-            
-                    if (mayor)
-                    {
-                        MenuManager.Instance.SaveJugador();
-                         //BestScoreText.text = "Best Score : "+ MenuManager.Instance.nombreJugadorActual + " : " + MenuManager.Instance.puntuacionJugadorActual ;
-                    }
+            for (int i = 0; i < jugadores.Count; i++)
+            {
+                mayor = MenuManager.Instance.compararScore(m_Points, jugadores[i].puntuacionJugador);
+                if (mayor)
+                {
+                    break;
+                }
+            }
+
+            if (mayor)
+            {
+                MenuManager.Instance.SaveJugador();
+                //BestScoreText.text = "Best Score : "+ MenuManager.Instance.nombreJugadorActual + " : " + MenuManager.Instance.puntuacionJugadorActual ;
+            }
         }
         else
         {
             MenuManager.Instance.SaveJugador();
         }
-        
-       
+
 
         MenuManager.Instance.BestScore();
-
-
     }
 
     /*private bool compararScore(int score1,int score2)
@@ -140,5 +135,4 @@ public class MainManager : MonoBehaviour
             return false;
         }
     }*/
-
 }

@@ -112,3 +112,4 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   PointValue: 0
+  brickPrefab: {fileID: 897975713663390409}
