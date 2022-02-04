@@ -11,6 +11,7 @@ public class MainManager : MonoBehaviour
     public Rigidbody Ball;
 
     public Text ScoreText;
+    public Text BestScoreText;
     public GameObject GameOverText;
     public Button btnVolver;
     
@@ -18,11 +19,19 @@ public class MainManager : MonoBehaviour
     private int m_Points;
     
     private bool m_GameOver = false;
+   
 
     
     // Start is called before the first frame update
     void Start()
     {
+        //MenuManager.Instance.LoadJugador();
+        if (MenuManager.Instance.puntuacionJugadorActual > 0)
+        { 
+            //BestScoreText.text = "Best Score : "+ MenuManager.Instance.nombreMejorJugador + " : " + MenuManager.Instance.mejorPuntuacion ;
+        }
+
+        BestScoreText.text = MenuManager.Instance.BestScore();
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -74,5 +83,53 @@ public class MainManager : MonoBehaviour
         m_GameOver = true;
         GameOverText.SetActive(true);
         btnVolver.gameObject.SetActive(true);
+       // if (m_Points > MenuManager.Instance.mejorPuntuacion)
+       // {
+            UpdateScore();
+            MenuManager.Instance.BestScore();
+       // }
+       
     }
+
+    private void UpdateScore()
+    {
+        bool mayor=false;
+        MenuManager.Instance.nombreJugadorActual = MenuManager.Instance.jugadorPlay;
+        MenuManager.Instance.puntuacionJugadorActual = m_Points;
+
+        var jugadores = MenuManager.Instance.LoadJugadores();
+
+        for (int i = 0; i < jugadores.Count; i++)
+        {
+            mayor = MenuManager.Instance.compararScore(m_Points,jugadores[i].puntuacionJugador );
+            if (mayor)
+            {
+                break;
+            }
+        }
+
+        if (mayor)
+        {
+            MenuManager.Instance.SaveJugador();
+             //BestScoreText.text = "Best Score : "+ MenuManager.Instance.nombreJugadorActual + " : " + MenuManager.Instance.puntuacionJugadorActual ;
+        }
+
+        MenuManager.Instance.BestScore();
+
+
+    }
+
+    /*private bool compararScore(int score1,int score2)
+    {
+        if (score2 > score1)
+        {
+            return true;
+            
+        }
+        else
+        {
+            return false;
+        }
+    }*/
+
 }
